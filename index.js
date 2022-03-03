@@ -12,23 +12,28 @@ const customError = (data) => {
 // with a Boolean value indicating whether or not they
 // should be required.
 const customParams = {
-  base: ['base', 'from', 'coin'],
-  quote: ['quote', 'to', 'market'],
+  chainId: ['chainId', 'network'],
+  address: ['address', 'contract', 'nft'],
   endpoint: false
 }
+
+http://localhost:8082/api/v1/nftprice?api_key=Dcopvom3X039&chainId=1&address=0xb47e3cd837ddf8e4c57f05d70ab865de6e193bbb
 
 const createRequest = (input, callback) => {
   // The Validator helps you validate the Chainlink request data
   const validator = new Validator(callback, input, customParams)
   const jobRunID = validator.validated.id
-  const endpoint = validator.validated.data.endpoint || 'price'
-  const url = `https://min-api.cryptocompare.com/data/${endpoint}`
-  const fsym = validator.validated.data.base.toUpperCase()
-  const tsyms = validator.validated.data.quote.toUpperCase()
+  const endpoint = validator.validated.data.endpoint || 'nftprice'
+  const url = `https://oracle.drops.co/api/v1/${endpoint}`
+
+  const fsychainIdm = validator.validated.chainId.base.toUpperCase()
+  const address = validator.validated.data.address.toUpperCase()
+  const api_key = process.env.API_KEY
 
   const params = {
-    fsym,
-    tsyms
+    fsychainIdm,
+    address,
+    api_key
   }
 
   // This is where you would add method and headers
@@ -48,7 +53,7 @@ const createRequest = (input, callback) => {
       // It's common practice to store the desired value at the top-level
       // result key. This allows different adapters to be compatible with
       // one another.
-      response.data.result = Requester.validateResultNumber(response.data, [tsyms])
+      response.data.result = Requester.validateResultNumber(response.data, ['dropsEtherValue'])
       callback(response.status, Requester.success(jobRunID, response))
     })
     .catch(error => {
