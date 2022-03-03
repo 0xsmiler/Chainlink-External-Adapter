@@ -7,7 +7,7 @@ This template provides a basic framework for developing Chainlink external adapt
 Clone this repo and change "ExternalAdapterProject" below to the name of your project
 
 ```bash
-git clone https://github.com/thodges-gh/CL-EA-NodeJS-Template.git ExternalAdapterProject
+git clone https://github.com/Dropsorg/Chainlink-External-Adapter ExternalAdapterProject
 ```
 
 Enter into the newly-created directory
@@ -26,16 +26,17 @@ See [Install Locally](#install-locally) for a quickstart
 
 ## Input Params
 
-- `base`, `from`, or `coin`: The symbol of the currency to query
-- `quote`, `to`, or `market`: The symbol of the currency to convert to
+- `chainId`, or `network`: The chainId string
+- `address`, or `contract` or `nft`: The address of NFT collection
+- `api_key`
 
 ## Output
 
 ```json
 {
- "jobRunID": "278c97ffadb54a5bbb93cfec5f7b5503",
+ "jobRunID": "0",
  "data": {
-  "USD": 164.02,
+  "dropsEtherValue": 164.02,
   "result": 164.02
  },
  "statusCode": 200
@@ -153,5 +154,5 @@ If using a REST API Gateway, you will need to disable the Lambda proxy integrati
 - Select a Storage Bucket to keep the zip in
 - Function to execute: gcpservice
 - Click More, Add variable (repeat for all environment variables)
-  - NAME: API_KEY
-  - VALUE: Your_API_key
+- NAME: API_KEY
+- VALUE: Your_API_key
