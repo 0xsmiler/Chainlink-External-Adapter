@@ -5,7 +5,7 @@ This External Adapter is using [CL-EA-NodeJS-Template](https://github.com/thodge
 
 - `chainId`: The chainId string
 - `address`: The address of NFT collection
-- `api_key`
+- `api_key`: To obtain api credentials, please [contact us](mailto:info@drops.co)
 
 ## Output
 
