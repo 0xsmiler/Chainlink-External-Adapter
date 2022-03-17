@@ -1,4 +1,5 @@
 const { Requester, Validator } = require('@chainlink/external-adapter')
+require('dotenv').config()
 
 // Define custom error scenarios for the API.
 // Return true for the adapter to retry.
@@ -12,26 +13,24 @@ const customError = (data) => {
 // with a Boolean value indicating whether or not they
 // should be required.
 const customParams = {
-  chainId: ['chainId', 'network'],
-  address: ['address', 'contract', 'nft'],
+  chainId: ['chainId'],
+  address: ['address'],
   endpoint: false
 }
-
-http://localhost:8082/api/v1/nftprice?api_key=Dcopvom3X039&chainId=1&address=0xb47e3cd837ddf8e4c57f05d70ab865de6e193bbb
 
 const createRequest = (input, callback) => {
   // The Validator helps you validate the Chainlink request data
   const validator = new Validator(callback, input, customParams)
   const jobRunID = validator.validated.id
-  const endpoint = validator.validated.data.endpoint || 'nftprice'
+  const endpoint = validator.validated.data.endpoint || 'price'
   const url = `https://oracle.drops.co/api/v1/${endpoint}`
 
-  const fsychainIdm = validator.validated.chainId.base.toUpperCase()
-  const address = validator.validated.data.address.toUpperCase()
+  const chainId = validator.validated.data.chainId
+  const address = validator.validated.data.address
   const api_key = process.env.API_KEY
 
   const params = {
-    fsychainIdm,
+    chainId,
     address,
     api_key
   }
@@ -39,7 +38,7 @@ const createRequest = (input, callback) => {
   // This is where you would add method and headers
   // you can add method like GET or POST and add it to the config
   // The default is GET requests
-  // method = 'get' 
+  // method = 'get'
   // headers = 'headers.....'
   const config = {
     url,
@@ -53,7 +52,7 @@ const createRequest = (input, callback) => {
       // It's common practice to store the desired value at the top-level
       // result key. This allows different adapters to be compatible with
       // one another.
-      response.data.result = Requester.validateResultNumber(response.data, ['dropsEtherValue'])
+      response.data.result = response.data.etherPrice
       callback(response.status, Requester.success(jobRunID, response))
     })
     .catch(error => {
