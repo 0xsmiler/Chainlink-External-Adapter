@@ -51,9 +51,13 @@ const createRequest = (input, callback) => {
     .then(response => {
       // It's common practice to store the desired value at the top-level
       // result key. This allows different adapters to be compatible with
-      // one another.
-      response.data.result = response.data.etherPrice
-      callback(response.status, Requester.success(jobRunID, response))
+      // // one another.
+
+      callback(response.status, Requester.success(jobRunID, {
+        data: response.data.data,
+        result: response.data.data.etherPrice,
+        status: response.status
+      }))
     })
     .catch(error => {
       callback(500, Requester.errored(jobRunID, error))

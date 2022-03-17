@@ -7,7 +7,7 @@ describe('createRequest', () => {
   context('successful calls', () => {
     const requests = [
       { name: 'id not supplied', testData: { data: { chainId: '1', address: '0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d' } } },
-      { name: 'chainId/address', testData: { id: jobID, data: { chainId: '1', address: '0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d' } } }
+      // { name: 'chainId/address', testData: { id: jobID, data: { chainId: '1', address: '0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d' } } }
     ]
 
     requests.forEach(req => {
@@ -16,8 +16,8 @@ describe('createRequest', () => {
           assert.equal(statusCode, 200)
           assert.equal(data.jobRunID, jobID)
           assert.isNotEmpty(data.data)
-          // assert.isAbove(Number(data.result), 0)
-          // assert.isAbove(Number(data.data.result), 0)
+          assert.isAbove(Number(data.result), 0)
+          assert.isAbove(Number(data.data.result), 0)
           done()
         })
       })
