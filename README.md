@@ -1,33 +1,10 @@
-# Chainlink NodeJS External Adapter Template
-
-This template provides a basic framework for developing Chainlink external adapters in NodeJS. Comments are included to assist with development and testing of the external adapter. Once the API-specific values (like query parameters and API key authentication) have been added to the adapter, it is very easy to add some tests to verify that the data will be correctly formatted when returned to the Chainlink node. There is no need to use any additional frameworks or to run a Chainlink node in order to test the adapter.
-
-## Creating your own adapter from this template
-
-Clone this repo and change "ExternalAdapterProject" below to the name of your project
-
-```bash
-git clone https://github.com/Dropsorg/Chainlink-External-Adapter ExternalAdapterProject
-```
-
-Enter into the newly-created directory
-
-```bash
-cd ExternalAdapterProject
-```
-
-You can remove the existing git history by running:
-
-```bash
-rm -rf .git
-```
-
-See [Install Locally](#install-locally) for a quickstart
+# Chainlink NodeJS External Adapter For Drops Oracle
+This External Adapter is using [CL-EA-NodeJS-Template](https://github.com/thodges-gh/CL-EA-NodeJS-Template).
 
 ## Input Params
 
-- `chainId`, or `network`: The chainId string
-- `address`, or `contract` or `nft`: The address of NFT collection
+- `chainId`: The chainId string
+- `address`: The address of NFT collection
 - `api_key`
 
 ## Output
@@ -36,9 +13,13 @@ See [Install Locally](#install-locally) for a quickstart
 {
  "jobRunID": "0",
  "data": {
-  "dropsEtherValue": 164.02,
+  "address", "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d",
+  "chainId": "1",
+  "roundId": 1,
+  "etherPrice": 164.02,
   "result": 164.02
  },
+ "result": 164.02,
  "statusCode": 200
 }
 ```
@@ -70,7 +51,7 @@ yarn start
 ## Call the external adapter/API server
 
 ```bash
-curl -X POST -H "content-type:application/json" "http://localhost:8080/" --data '{ "id": 0, "data": { "from": "ETH", "to": "USD" } }'
+curl -X POST -H "content-type:application/json" "http://localhost:8080/" --data '{ "id": 0, "data": { "chainId": "1", "address": "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d" } }'
 ```
 
 ## Docker
