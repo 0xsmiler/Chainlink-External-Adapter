@@ -5,8 +5,6 @@ const bodyParser = require('body-parser')
 const app = express()
 const port = process.env.EA_PORT || 8080
 
-console.log('====>', process.env.API_KEY)
-
 app.use(bodyParser.json())
 
 app.post('/', (req, res) => {
